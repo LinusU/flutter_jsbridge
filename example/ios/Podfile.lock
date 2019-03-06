@@ -1,6 +1,6 @@
 PODS:
   - Flutter (1.0.0)
-  - flutter_jsbridge (0.0.1):
+  - flutter_jsbridge (0.1.0):
     - Flutter
     - PromiseKit (~> 6.8)
   - PromiseKit (6.8.3):
@@ -29,7 +29,7 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   Flutter: 9d0fac939486c9aba2809b7982dfdbb47a7b0296
-  flutter_jsbridge: bdcaa75e4380f3e3d0445160847dfaa26bf62dec
+  flutter_jsbridge: 1943b5286e578efe78ce1ed3dd92203f17108c0f
   PromiseKit: 94c6e781838c5bf4717677d0d882b0e7250c80fc
 
 PODFILE CHECKSUM: ebd43b443038e611b86ede96e613bd6033c49497
