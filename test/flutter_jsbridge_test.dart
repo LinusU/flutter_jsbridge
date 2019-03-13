@@ -21,7 +21,7 @@ void main() {
     final bridge = JSBridge('window.foo = () => 42');
     final result = await bridge.call('foo', [1, 2]);
 
-    expect(calls[0], 'MethodCall(init, {libraryCode: window.foo = () => 42})');
+    expect(calls[0], 'MethodCall(init, {libraryCode: window.foo = () => 42, customOrigin: null, incognito: false})');
     expect(calls[1], 'MethodCall(call, {id: "foobar", function: foo, arguments: [1,2]})');
     expect(result, 'foobar');
   });

@@ -28,10 +28,10 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/flutter_jsbridge/ios"
 
 SPEC CHECKSUMS:
-  Flutter: 9d0fac939486c9aba2809b7982dfdbb47a7b0296
-  flutter_jsbridge: 1943b5286e578efe78ce1ed3dd92203f17108c0f
+  Flutter: 58dd7d1b27887414a370fcccb9e645c08ffd7a6a
+  flutter_jsbridge: 04f9695ec18be5fad866b207136a68a3d221cb72
   PromiseKit: 94c6e781838c5bf4717677d0d882b0e7250c80fc
 
 PODFILE CHECKSUM: ebd43b443038e611b86ede96e613bd6033c49497
 
-COCOAPODS: 1.5.3
+COCOAPODS: 1.6.1

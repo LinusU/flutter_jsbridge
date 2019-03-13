@@ -31,7 +31,9 @@ public class SwiftFlutterJsbridgePlugin: NSObject, FlutterPlugin {
             case "init":
                 let id = UUID().uuidString
                 let libraryCode = (call.arguments as! Dictionary<String, AnyObject>)["libraryCode"] as! String
-                let context = Context(libraryCode: libraryCode, customOrigin: nil, incognito: false)
+                let customOrigin = ((call.arguments as! Dictionary<String, AnyObject>)["customOrigin"] as? String).map { URL(string: $0)! }
+                let incognito = (call.arguments as! Dictionary<String, AnyObject>)["incognito"] as! Bool
+                let context = Context(libraryCode: libraryCode, customOrigin: customOrigin, incognito: incognito)
                 UIApplication.shared.windows.first?.addSubview(context.webView)
                 SwiftFlutterJsbridgePlugin.contexts[id] = context
                 result(id)
