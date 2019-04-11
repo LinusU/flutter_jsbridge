@@ -3,6 +3,17 @@ import Flutter
 import UIKit
 import PromiseKit
 
+#if os(iOS)
+enum GlobalUIHook {
+    case none
+    case view(UIView)
+    case viewController(UIViewController)
+    case window(UIWindow)
+}
+
+internal var globalUIHook: GlobalUIHook = .none
+#endif
+
 extension Promise {
     func flutter(_ result: @escaping FlutterResult) {
         self.done {
@@ -55,6 +66,12 @@ public class SwiftFlutterJsbridgePlugin: NSObject, FlutterPlugin {
         registrar.addMethodCallDelegate(instance, channel: channel)
     }
 
+    #if os(iOS)
+    public static func setGlobalUIHook(view: UIView) { globalUIHook = .view(view) }
+    public static func setGlobalUIHook(viewController: UIViewController) { globalUIHook = .viewController(viewController) }
+    public static func setGlobalUIHook(window: UIWindow) { globalUIHook = .window(window) }
+    #endif
+
     init(messenger: FlutterBinaryMessenger) {
         self.messenger = messenger
     }
@@ -67,7 +84,16 @@ public class SwiftFlutterJsbridgePlugin: NSObject, FlutterPlugin {
                 let customOrigin = ((call.arguments as! Dictionary<String, AnyObject>)["customOrigin"] as? String).map { URL(string: $0)! }
                 let incognito = (call.arguments as! Dictionary<String, AnyObject>)["incognito"] as! Bool
                 let context = Context(libraryCode: libraryCode, customOrigin: customOrigin, incognito: incognito)
-                UIApplication.shared.windows.first?.addSubview(context.webView)
+
+                #if os(iOS)
+                switch globalUIHook {
+                    case .none: break
+                    case .view(let view): view.addSubview(context.webView)
+                    case .viewController(let viewController): viewController.view.addSubview(context.webView)
+                    case .window(let window): window.addSubview(context.webView)
+                }
+                #endif
+
                 SwiftFlutterJsbridgePlugin.contexts[id] = context
                 SwiftFlutterJsbridgePlugin.channels[id] = FlutterMethodChannel(name: "flutter_jsbridge.\(id)", binaryMessenger: self.messenger)
                 result(id)
